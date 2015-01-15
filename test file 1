@@ -1,3 +1,4 @@
 #this is just to try out github
 hw=raw_userinput ''what do you want to be reprinted on screen''
 print hw
+print ''this is the word you wanted''
