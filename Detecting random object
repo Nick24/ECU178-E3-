@@ -1,11 +1,41 @@
 import time
 import random
 
+def leftKey(event):
+    print "Left key pressed"
+    x1,y1,x2,y2=canvas.coords(id3)
+    if x1 > x_min:
+        canvas.coords(id3,x1-10,y1,x2-10,y2)
+def rightKey(event):
+    print "Right key pressed"
+    x1,y1,x2,y2=canvas.coords(id3)
+    if x2 < x_max:
+        canvas.coords(id3,x1+10,y1,x2+10,y2)
+def upKey(event):
+    print "Up key pressed"
+    x1,y1,x2,y2=canvas.coords(id3)
+    if y1 > y_min:
+        canvas.coords(id3,x1,y1-5,x2,y2-5)
+def downKey(event):
+    print "Down key pressed"
+    x1,y1,x2,y2=canvas.coords(id3)
+    if y2 < y_max:
+        canvas.coords(id3,x1,y1+5,x2,y2+5)
 
 from Tkinter import *
 window = Tk()
 canvas = Canvas(window, width=400, height=300, bg='white')
 canvas.pack(padx=10,pady=10)
+
+id3=canvas.create_rectangle(120,120,100, 100, width=2)
+
+canvas.bind('<Left>', leftKey) 
+canvas.bind('<Right>', rightKey)
+canvas.bind('<Up>', upKey)
+canvas.bind('<Down>', downKey)
+canvas.focus_set()
+vx = 10.0 
+vy = 5.0
 
 vx = 10.0 
 vy = 5.0 
