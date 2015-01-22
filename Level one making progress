@@ -1,0 +1,65 @@
+import tkinter
+import time
+import random
+
+window = Tk()
+canvas=Canvas(window, width=800, height=640, bg='white')
+canvas.pack()
+canvas.pack(padx=10, pady=10)
+id1=canvas.create_rectangle(3, 7, 3+10, 7+10, fill='red')
+x1,y1,x2,y2=canvas.coords(id1)
+canvas.coords(id1,x1,y1,x2,y2)
+canvas.update()
+
+vx = 5.0
+vy = 5.0
+
+def stopLight:
+    timer = random.randint(1,5)
+    time.sleep(timer)
+def OffL():
+    objectrectangle=canvas.create_rectangle(380,620,400,640, fill="darkgreen")
+    objectrectangle=canvas.create_rectangle(400,620,420,640, fill="darkred")
+    canvas.update()
+def StartL():
+    objectrectangle=canvas.create_rectangle(400,620,420,640, fill="darkred")
+    objectrectangle=canvas.create_rectangle(380,620,400,640, fill="green")
+    canvas.update()
+def StopL():
+    objectrectangle=canvas.create_rectangle(380,620,400,640, fill="darkgreen")
+    objectrectangle=canvas.create_rectangle(400,620,420,640, fill="red")
+    canvas.update()
+    
+class landmark:
+    def __init__(self, xcoor, ycoor):
+        self.treasure = random.randint(0,1)
+        self.x = xcoor
+        self.y = ycoor
+
+    def drawlandmark():
+    #add an action to select a sprite image for a landmark
+    
+
+TheMap = []       
+TheMap.append(landmark(150,350))
+TheMap.append(landmark(400,200))
+TheMap.append(landmark(700,500))
+TheMap.append(landmark(300,50))
+
+for i in range(0, len(TheMap)):
+    TheMap[i].drawlandmark
+
+Points = 500
+score = 0
+
+def searcher(seeker):
+    seeker = random.choice(TheMap)
+    if seeker[0] == 1:
+        #the moving part here
+        score = score + Points
+    MapMarks.remove(seeker)
+    if len(MapMarks) == 0:
+        return score
+    else:
+        seeker = random.choice(theMap)
+        searcher(seeker)
