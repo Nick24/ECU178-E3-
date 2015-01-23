@@ -1,0 +1,107 @@
+import time
+import random
+
+def leftKey(event):
+    print "Left key pressed"
+    x1,y1,x2,y2=canvas.coords(id3)
+    if x1 > x_min:
+        canvas.coords(id3,x1-10,y1,x2-10,y2)
+def rightKey(event):
+    print "Right key pressed"
+    x1,y1,x2,y2=canvas.coords(id3)
+    if x2 < x_max:
+        canvas.coords(id3,x1+10,y1,x2+10,y2)
+def upKey(event):
+    print "Up key pressed"
+    x1,y1,x2,y2=canvas.coords(id3)
+    if y1 > y_min:
+        canvas.coords(id3,x1,y1-5,x2,y2-5)
+def downKey(event):
+    print "Down key pressed"
+    x1,y1,x2,y2=canvas.coords(id3)
+    if y2 < y_max:
+        canvas.coords(id3,x1,y1+5,x2,y2+5)
+
+from Tkinter import *
+window = Tk()
+canvas = Canvas(window, width=400, height=300, bg='white')
+canvas.pack(padx=10,pady=10)
+
+id3=canvas.create_rectangle(120,120,100, 100, width=2)
+
+canvas.bind('<Left>', leftKey) 
+canvas.bind('<Right>', rightKey)
+canvas.bind('<Up>', upKey)
+canvas.bind('<Down>', downKey)
+canvas.focus_set()
+vx = 10.0 
+vy = 5.0
+
+vx = 10.0 
+vy = 5.0 
+
+x_min = 0.0
+y_min = 0.0
+x_max = 400.0
+y_max = 300.0
+id1=canvas.create_rectangle(3,7,3+10,7+10)
+Obx1=random.randint(75,150)
+Oby1=random.randint(75,150)
+Obx2=Obx1+150
+Oby2=Oby1-75
+
+decision=random.randint(1,2)
+def lighting():
+    decision=random.randint(1,2)
+    def start():
+        light=canvas.create_oval(100, 10, 210, 80, width=2, fill="green")
+        canvas.update()
+    def stop():
+        light=canvas.create_oval(100, 10, 210, 80, width=2, fill="red")
+        canvas.update()
+        
+    if decision == 2:
+        stop()
+        stoptime=time.sleep(random.randint(1,4))
+        start()
+        
+if decision == 2:
+    lighting()
+    
+id2=canvas.create_rectangle(Obx1,Oby1,Obx2,Oby2, fill='blue')
+
+for t in range(1, 500):
+    x1,y1,x2,y2=canvas.coords(id1)
+
+    if x2>(Obx1 - 10) and x2<(Obx1+10) and y1< Oby1 and y1>Oby2:
+        print "Object detected left side"
+        vx=-10
+
+    if x1<(Obx2 - 10) and x1>(Obx2+10) and y1< Oby1 and y1>Oby2:
+        print "Object detected right side"
+        vx=10
+
+    if y1>(Oby1 - 10) and y1<(Oby1+10) and x1>Obx1 and x1<Obx2:
+        print "Object detected bottom of object"
+        vy=10
+        
+    if y1>(Oby2 - 10) and y1<(Oby2+10) and x1>Obx1 and x1<Obx2:
+        print "Object detected top of object"
+        vy=-10
+  
+    
+# If a boundary has been crossed, reverse the direction
+    if x1 >= x_max:
+        vx = -10.0
+    if y1 <= y_min:
+        vy = 5.0
+    if y2 >= y_max:
+        vy = -5.0
+    if x1 <= x_min:
+        vx = 10.0
+
+    canvas.coords(id1,x1+vx,y1+vy,x2+vx,y2+vy)
+    canvas.update()
+
+    time.sleep(0.1)
+window.mainloop()
