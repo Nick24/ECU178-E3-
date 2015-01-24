@@ -1,0 +1,4 @@
+def rightKey(event):
+    print "Right key pressed"
+    x1,y1,x2,y2=canvas.coords(id1)
+    canvas.coords(id1,x1+10,y1,x2+10,y2)
