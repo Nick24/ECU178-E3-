@@ -1,0 +1,4 @@
+def downKey(event):
+    print "Down key pressed"
+    x1,y1,x2,y2=canvas.coords(id1)
+    canvas.coords(id1,x1,y1+5,x2,y2+5)
