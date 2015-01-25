@@ -11,4 +11,4 @@ CONTENTS OF THIS FILE
  * Configuration
  * Troubleshooting
  * FAQ
- * Maintainers
+ Footnote
