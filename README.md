@@ -9,7 +9,7 @@ CONTENTS OF THIS FILE
  * Requirements
  * Recommended modules
  * Installation
-To Install this piece of software 
+      To Install this piece of software all you have to
  * Configuration
  * Troubleshooting
  * FAQ
