@@ -5,11 +5,11 @@ Project 2
 CONTENTS OF THIS FILE
 ---------------------
  * Introduction
- This i
+      This i
  * Requirements
  * Recommended modules
  * Installation
-      To Install this piece of software all you have to
+      To Install this piece of software all you have to do is open 
  * Configuration
  * Troubleshooting
  * FAQ
