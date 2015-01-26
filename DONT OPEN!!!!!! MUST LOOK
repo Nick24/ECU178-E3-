@@ -1,0 +1,163 @@
+import time
+import random
+from Tkinter import *
+#Defining the player movement
+def leftKey(event):
+    print "Left key pressed"
+    x1,y1,x2,y2=canvas.coords(id1) 
+    if x1 > x_min+5:
+        canvas.coords(id1,x1-vx,y1,x2-vx,y2)
+
+def rightKey(event):
+    print "Right key pressed"
+    x1,y1,x2,y2=canvas.coords(id1)
+    if x2 < x_max-5:
+        canvas.coords(id1,x1+vx,y1,x2+vx,y2)   
+        
+def upKey(event):
+    print "Up key pressed"
+    x1,y1,x2,y2=canvas.coords(id1)
+    if y1 > y_min+5:
+        canvas.coords(id1,x1,y1-vy,x2,y2-vy)
+       
+def downKey(event):
+    print "Down key pressed"
+    x1,y1,x2,y2=canvas.coords(id1)
+    if y2 < y_max-5:
+        canvas.coords(id1,x1,y1+vy,x2,y2+vy)
+#Defining the automatic robot movement
+def xplus():    # movement right
+    x3,y3,x4,y4=canvas.coords(id2)
+    canvas.coords(id2,x3+vx,y3,x4+vx,y4)
+    canvas.update()
+    time.sleep(0.1)
+def yplus():    # movement down
+    x3,y3,x4,y4=canvas.coords(id2)
+    canvas.coords(id2,x3,y3+vy,x4,y4+vy)
+    canvas.update()
+    time.sleep(0.1)
+def xminus():   # movement left
+    x3,y3,x4,y4=canvas.coords(id2)
+    canvas.coords(id2,x3-vx,y3,x4-vx,y4)
+    canvas.update()
+    time.sleep(0.1)
+def yminus():   # movement up
+    x3,y3,x4,y4=canvas.coords(id2)
+    canvas.coords(id2,x3,y3-vy,x4,y4-vy)
+    canvas.update()
+    time.sleep(0.1)
+
+window = Tk()
+canvas=Canvas(window, width=800, height=640, bg='white')
+canvas.pack(padx=10, pady=10)
+id1=canvas.create_rectangle(400, 310, 400+10, 310+10, fill='red')
+id2=canvas.create_rectangle(390, 300, 390+10, 300+10, fill='blue')
+x1,y1,x2,y2=canvas.coords(id1)
+x3,y3,x4,y4=canvas.coords(id2)
+canvas.coords(id1,x1,y1,x2,y2)
+canvas.coords(id2,x3,y3,x4,y4)
+canvas.update()
+#Binding keyboard keys to the given functions
+canvas.bind('<Left>', leftKey) 
+canvas.bind('<Right>', rightKey)
+canvas.bind('<Up>', upKey)
+canvas.bind('<Down>', downKey)
+canvas.focus_set()
+#Size of each movement step (in pixels)
+vx = 5 
+vy = 5
+#Defining canvas borders (in pixels)
+x_min = 0
+y_min = 0
+x_max = 800
+y_max = 640
+#The code to define everything regarding the stoplights
+def stopLight():
+    timer = random.randint(1,5)
+    time.sleep(timer)
+def OffL():
+    objectrectangle=canvas.create_rectangle(380,620,400,640, fill="darkgreen")
+    objectrectangle=canvas.create_rectangle(400,620,420,640, fill="darkred")
+    canvas.update()
+def StartL():
+    objectrectangle=canvas.create_rectangle(400,620,420,640, fill="darkred")
+    objectrectangle=canvas.create_rectangle(380,620,400,640, fill="green")
+    canvas.update()
+def StopL():
+    objectrectangle=canvas.create_rectangle(380,620,400,640, fill="darkgreen")
+    objectrectangle=canvas.create_rectangle(400,620,420,640, fill="red")
+    canvas.update()
+#The code to start and stop the movement (stoplights)
+def Lighting():
+    decision=random.randint(1,2)
+    if decision == 2:
+        StopL()
+        stopLight()
+        StartL()
+    window.after(5000, Lighting)
+window.after(5000, Lighting)
+#The template of a landmark
+class landmark:
+    def __init__(self, xcoor, ycoor):
+        self.treasure = random.randint(0,1)
+        self.x = xcoor
+        self.y = ycoor
+    #The code to make a landmark location an image 
+    def drawlandmark():
+        imageRender=random.randint(1,4)
+        if imageRender == 1:
+            gif1 = PhotoImage(file ='temple.gif')
+            canvas.create_image(xcoor, ycoor, image = gif1, anchor = NW)
+            mainloop()
+        if imageRender == 2:
+            gif2 = PhotoImage(file ='hut.gif')
+            canvas.create_image(xcoor, ycoor, image = gif2, anchor = NW)
+            mainloop()
+        if imageRender == 3:
+            gif3 = PhotoImage(file ='cave.gif')
+            canvas.create_image(xcoor, ycoor, image = gif3, anchor = NW)
+            mainloop()
+        if imageRender == 4:
+            gif4 = PhotoImage(file ='grave.gif')
+            canvas.create_image(xcoor, ycoor, image = gif4, anchor = NW)
+            mainloop()
+#The set of landmarks on the map, with all of their coordinates
+TheMap = []       
+TheMap.append(landmark(150,350))
+TheMap.append(landmark(400,200))
+TheMap.append(landmark(700,500))
+TheMap.append(landmark(300,50))
+#Randomly select an image for a landmark
+for i in range(0, len(TheMap)):
+    TheMap[i].drawlandmark
+
+def SearchX():
+    while x3 < 150:
+        xplus()
+    while x3 > 150:
+        xminus()
+
+def SearchY():
+    while y3 > 350:
+        yplus()
+    while y3 < 350:
+        yminus()
+    
+Points = 500
+score = 0
+
+def searcher(seeker):
+    seeker = random.choice(TheMap)
+    SearchX()
+    SearchY()
+    if seeker[0] == 1:
+        score = score + Points
+    MapMarks.remove(seeker)
+    if len(MapMarks) == 0:
+        return score
+    else:
+        seeker = random.choice(theMap)
+        searcher(seeker)
+seeker=random.choice(theMap)
+searcher(seeker)
+window.mainloop()
