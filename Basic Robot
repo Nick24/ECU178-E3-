@@ -1,0 +1,88 @@
+import time
+import random
+
+from Tkinter import*
+window=Tk()
+canvas=Canvas(window, width=800, height=600, bg='white')
+canvas.pack(padx=5,pady=5)
+lm1=canvas.create_oval(40, 40, 40+50, 40+50, fill="blue", width=3)
+lm2=canvas.create_oval(730, 40, 730+50, 40+50, fill="blue", width=3)
+lm3=canvas.create_oval(40, 530, 40+50, 530+50, fill="blue", width=3)
+lm4=canvas.create_oval(730, 530, 730+50, 530+50, fill="blue", width=3)
+
+vx=1.0
+vy=1.0
+
+x_min=0.0
+y_min=0.0
+x_max=800.0
+y_max=600.0
+
+bot=canvas.create_oval(380, 300, 380+20, 300+20, fill="white", width=2)
+
+def upleft():
+   x1,y1,x2,y2=canvas.coords(bot)
+   canvas.coords(bot,x1-vx,y1-vy,x2-vx,y2-vy)
+   canvas.update()
+   time.sleep(0.001)
+def downright():
+   x1,y1,x2,y2=canvas.coords(bot)
+   canvas.coords(bot,x1+vx,y1+vy,x2+vx,y2+vy)
+   canvas.update()
+   time.sleep(0.001)
+def downleft():
+    x1,y1,x2,y2=canvas.coords(bot)
+    canvas.coords(bot,x1-vx,y1+vy,x2-vx,y2+vy)
+    canvas.update()
+    time.sleep(0.001)
+def upright():
+    x1,y1,x2,y2=canvas.coords(bot)
+    canvas.coords(bot,x1+vx,y1-vy,x2+vx,y2-vy)
+    canvas.update()
+    time.sleep(0.001)
+
+def lighting():
+    decision=random.randint(1,2)
+    def start():
+        light=canvas.create_oval(380, 40, 410, 70, width=2, fill="green")
+        canvas.update()
+    def stop():
+        light=canvas.create_oval(380, 40, 410, 70, width=2, fill="red")
+        canvas.update()
+        
+    if decision == 2:
+        stop()
+        stoptime=time.sleep(random.randint(1,4))
+        start()
+    window.after(1000,lighting)
+window.after(1000,lighting)
+canvas.update()
+
+x1,y1,x2,y2=canvas.coords(bot)
+x3,y3,x4,y4=canvas.coords(lm1)
+
+
+alist=[1,2,3,4]
+path = random.randint(1,5)
+
+for t in range(1,270):
+   x1,y1,x2,y2=canvas.coords(bot)
+   if path == 1:
+      upleft()
+      tre=canvas.create_oval(42,42, 42+20, 42+20, fill="yellow", outline="yellow")
+      alist.append(5)
+   elif path == 2:
+       upright()
+       tre=canvas.create_oval(725,42, 725+20, 42+20, fill="yellow", outline="yellow")
+       alist.append(6)
+   elif path == 3:
+       downleft()
+       tre=canvas.create_oval(42, 525, 42+20, 525+20, fill="yellow", outline="yellow")
+       alist.append(7)
+   else:
+       downright()
+       tre=canvas.create_oval(725,525, 725+20, 525+20, fill="yellow", outline="yellow")
+       alist.append(8)
+
+canvas.update()
+window.mainloop()
