@@ -1,0 +1,13 @@
+from Tkinter import *
+import random
+import time
+
+class Robot:
+    def __init__(self, x, y, speed = 1.0, size= 4, colour = 'blue'):
+        self.x = x
+        self.y = y
+        self._vx= speed
+        self._vy = speed
+        self.speed = speed
+        self.size = size
+        self.colour = colour 
