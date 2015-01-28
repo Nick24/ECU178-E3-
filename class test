@@ -59,8 +59,9 @@ obstacle4 = Obstacle (100, 400 , 50)
 obstacle4.drawObstacle(canvas)
 
 
-dave = Robot(150, 150, speed = 1, colour='red', size=10) 
-jeff = Robot(150, 150, speed = 1, size=10) 
+dave = Robot(150, 150, speed = 10, colour='red', size=10) 
+jeff = Robot(150, 150, speed = 10, size=10) 
+
 dave.drawRobot(canvas) 
 jeff.drawRobot(canvas)
  
