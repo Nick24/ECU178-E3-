@@ -42,7 +42,7 @@ class World:
 
          
 window = Tk()
-canvas = Canvas(window, width=800, height=600, bg ='white')
+canvas = Canvas(window, width=550, height=550, bg ='white')
 canvas.pack(padx=1, pady=1)
 
 
