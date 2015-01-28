@@ -34,3 +34,41 @@ class Obstacle:
     def drawObstacle(self, canvas):
         self.canvas = canvas
         self.shape = canvas.create_oval(self.x, self.y, self.xEnd, self.yEnd,fill='yellow') 
+
+
+class World:
+     def __init__(self):
+         self.obstacles = []
+
+         
+window = Tk()
+canvas = Canvas(window, width=800, height=600, bg ='white')
+canvas.pack(padx=1, pady=1)
+
+
+obstacle1 = Obstacle (100, 100 , 50)
+obstacle1.drawObstacle(canvas)
+
+obstacle2 = Obstacle (400, 100 , 50)
+obstacle2.drawObstacle(canvas)
+
+obstacle3 = Obstacle (400, 400 , 50)
+obstacle3.drawObstacle(canvas)
+
+obstacle4 = Obstacle (100, 400 , 50)
+obstacle4.drawObstacle(canvas)
+
+
+dave = Robot(150, 150, speed = 1, colour='red', size=10) 
+jeff = Robot(150, 150, speed = 1, size=10) 
+dave.drawRobot(canvas) 
+jeff.drawRobot(canvas)
+ 
+for t in range(500):
+    dave.roam()
+    jeff.roam()
+    time.sleep(0.1)
+
+
+window.mainloop()
+
