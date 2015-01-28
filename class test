@@ -24,3 +24,13 @@ class Robot:
     def drawRobot(self,canvas):
         self.canvas = canvas
         self.shape = canvas.create_oval(self.x, self.y, self.x + self.size, self.y +self.size, fill=self.colour)
+class Obstacle:
+    def __init__(self, x, y, size):
+        self.x = x
+        self.y = y
+        self.xEnd = x + size
+        self.yEnd = y + size
+        self.size = x + size 
+    def drawObstacle(self, canvas):
+        self.canvas = canvas
+        self.shape = canvas.create_oval(self.x, self.y, self.xEnd, self.yEnd,fill='yellow') 
