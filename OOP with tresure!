@@ -1,0 +1,101 @@
+
+from Tkinter import *
+import random
+import time
+#--------------------------splash screen-------------------------------------------
+import Tkinter as tk
+root = tk.Tk()
+root.overrideredirect(True)
+width = root.winfo_screenwidth()
+height = root.winfo_screenheight()
+root.geometry('%dx%d+%d+%d' % (width*0.6, height*0.5, width*0.1, height*0.1))
+image_file = "splash.gif"
+image = tk.PhotoImage(file=image_file)
+canvas = tk.Canvas(root, height=height*0.8, width=width*0.4, bg="white")
+canvas.create_image(width*0.3/2, height*0.8/2, image=image)
+canvas.pack()
+root.after(5000, root.destroy)
+
+
+#--------------------------------class-----------------------------------------------
+
+class Robot:
+    def __init__(self, x, y, speed = 1.0, size= 4, colour = 'blue'):
+        self.x = x
+        self.y = y
+        self._vx= speed
+        self._vy = speed
+        self.speed = speed
+        self.size = size
+        self.colour = colour
+    def roam(self):
+        v = self.speed
+        self._vx += random.randint(-v, v)
+        self._vy += random.randint(-v,v)
+        self._vx = max(-v,min(self._vx, v))
+        self._vy = max(-v, min(self._vy,v))
+        self.x += self._vx
+        self.y += self._vy
+        self.canvas.coords(self.shape, self.x, self.y, self.x + self.size, self.y + self.size)
+        self.canvas.update()   
+    def drawRobot(self,canvas):
+        self.canvas = canvas
+        self.shape = canvas.create_oval(self.x, self.y, self.x + self.size, self.y +self.size, fill=self.colour)
+
+class Obstacle:
+    def __init__(self, x, y, size):
+        self.x = x
+        self.y = y
+        self.xEnd = x + size
+        self.yEnd = y + size
+        self.size = x + size
+    def drawObstacle(self, canvas):
+        self.canvas = canvas
+        self.shape = canvas.create_oval(self.x, self.y, self.xEnd, self.yEnd,fill="blue") 
+
+class World:
+     def __init__(self):
+         self.obstacles = []
+#--------------------------main------------------------------------------------------         
+window = Tk()
+window.title("ALL Project 2 Treasure Hunt")
+canvas = Canvas(window, width=550, height=550, bg ='white')
+canvas.pack(padx=1, pady=1)
+
+obstacle1 = Obstacle (100, 100 , 50)
+treasure1 = Obstacle (100, 100 , 20)
+obstacle1.drawObstacle(canvas)
+
+obstacle2 = Obstacle (400, 100 , 50)
+treasure2 = Obstacle (400, 100 , 20)
+obstacle2.drawObstacle(canvas)
+
+obstacle3 = Obstacle (400, 400 , 50)
+treasure3 = Obstacle (400 , 100 , 20)
+obstacle3.drawObstacle(canvas)
+
+obstacle4 = Obstacle (100, 400 , 50)
+treasure4 = Obstacle (100, 400 , 20)
+obstacle4.drawObstacle(canvas)
+
+g = random.randint(1,5)
+if g==4:
+    treasure4.drawObstacle(canvas)
+elif g==3:
+    treasure3.drawObstacle(canvas)
+elif g==2:
+    treasure2.drawObstacle(canvas)
+elif g==1:
+    treasure1.drawObstacle(canvas)
+canvas.update()
+
+dave = Robot(150, 150, speed = 7, colour='red', size=10) 
+jeff = Robot(150, 150, speed = 7, size=10) 
+dave.drawRobot(canvas) 
+jeff.drawRobot(canvas)
+
+for t in range(400):
+    dave.roam()
+    jeff.roam()
+    time.sleep(0.1)
+window.mainloop()
