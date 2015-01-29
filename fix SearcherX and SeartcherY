@@ -1,0 +1,164 @@
+import time
+import random
+from Tkinter import *
+#Defining the player movement
+def leftKey(event):
+    print "Left key pressed"
+    x1,y1,x2,y2=canvas.coords(id1)
+    if x1 > x_min+5:
+        canvas.coords(id1,x1-vx,y1,x2-vx,y2)
+def rightKey(event):
+    print "Right key pressed"
+    x1,y1,x2,y2=canvas.coords(id1)
+    if x2 < x_max-5:
+        canvas.coords(id1,x1+vx,y1,x2+vx,y2)
+def upKey(event):
+    print "Up key pressed"
+    x1,y1,x2,y2=canvas.coords(id1)
+    if y1 > y_min+5:
+        canvas.coords(id1,x1,y1-vy,x2,y2-vy)
+def downKey(event):
+    print "Down key pressed"
+    x1,y1,x2,y2=canvas.coords(id1)
+    if y2 < y_max-5:
+        canvas.coords(id1,x1,y1+vy,x2,y2+vy)
+#Defining the automatic robot movement
+def xplus(): # movement right
+    x3,y3,x4,y4=canvas.coords(id2)
+    canvas.coords(id2,x3+vx,y3,x4+vx,y4)
+    canvas.update()
+    time.sleep(0.1)
+def yplus(): # movement down
+    x3,y3,x4,y4=canvas.coords(id2)
+    canvas.coords(id2,x3,y3+vy,x4,y4+vy)
+    canvas.update()
+    time.sleep(0.1)
+def xminus(): # movement left
+    x3,y3,x4,y4=canvas.coords(id2)
+    canvas.coords(id2,x3-vx,y3,x4-vx,y4)
+    canvas.update()
+    time.sleep(0.1)
+def yminus(): # movement up
+    x3,y3,x4,y4=canvas.coords(id2)
+    canvas.coords(id2,x3,y3-vy,x4,y4-vy)
+    canvas.update()
+    time.sleep(0.1)
+window = Tk()
+print "step one"
+canvas=Canvas(window, width=800, height=640, bg='white')
+canvas.pack(padx=10, pady=10)
+print "step two"
+id1=canvas.create_rectangle(400, 310, 400+10, 310+10, fill='red')
+print "step three"
+id2=canvas.create_rectangle(390, 300, 390+10, 300+10, fill='blue')
+print "step four"
+x1,y1,x2,y2=canvas.coords(id1)
+x3,y3,x4,y4=canvas.coords(id2)
+canvas.coords(id1,x1,y1,x2,y2)
+canvas.coords(id2,x3,y3,x4,y4)
+print "step five"
+canvas.update()
+print "step six"
+#Binding keyboard keys to the given functions
+canvas.bind('<Left>', leftKey)
+canvas.bind('<Right>', rightKey)
+canvas.bind('<Up>', upKey)
+canvas.bind('<Down>', downKey)
+print "step seven"
+canvas.focus_set()
+#Size of each movement step (in pixels)
+vx = 5
+vy = 5
+print "step eight"
+#Defining canvas borders (in pixels)
+x_min = 0
+y_min = 0
+x_max = 800
+y_max = 640
+print "step nine"
+#The code to define everything regarding the stoplights
+def stopLight():
+    timer = random.randint(1,5)
+    time.sleep(timer)
+def OffL():
+    objectrectangle=canvas.create_rectangle(380,620,400,640, fill="darkgreen")
+    objectrectangle=canvas.create_rectangle(400,620,420,640, fill="darkred")
+    canvas.update()
+def StartL():
+    objectrectangle=canvas.create_rectangle(400,620,420,640, fill="darkred")
+    objectrectangle=canvas.create_rectangle(380,620,400,640, fill="green")
+    canvas.update()
+def StopL():
+    objectrectangle=canvas.create_rectangle(380,620,400,640, fill="darkgreen")
+    objectrectangle=canvas.create_rectangle(400,620,420,640, fill="red")
+    canvas.update()
+#The code to start and stop the movement (stoplights)
+def Lighting():
+    decision=random.randint(1,2)
+    if decision == 2:
+        StopL()
+        stopLight()
+        StartL()
+    window.after(5000, Lighting)
+print "step eight"
+StartL()
+print "step nine"
+window.after(5000, Lighting)
+print "step ten"
+#The template of a landmark
+class landmark:
+    def __init__(self, xcoor, ycoor):
+        self.treasure = random.randint(0,1)
+        self.x = xcoor
+        self.y = ycoor
+print "step eleven"
+#The set of landmarks on the map, with all of their coordinates
+print "step twelve"
+TheMap = []
+TheMap.append(landmark(150,350))
+TheMap.append(landmark(400,200))
+TheMap.append(landmark(700,500))
+TheMap.append(landmark(300,50))
+#Randomly select an image for a landmark
+print "step thirteen"
+gif1 = PhotoImage(file ='temple.gif')
+canvas.create_image(150, 350, image = gif1, anchor = NW)
+gif2 = PhotoImage(file ='hut.gif')
+canvas.create_image(400, 200, image = gif2, anchor = NW)
+gif3 = PhotoImage(file ='cave.gif')
+canvas.create_image(700, 500, image = gif3, anchor = NW)
+gif4 = PhotoImage(file ='temple.gif')
+canvas.create_image(300, 50, image = gif4, anchor = NW)
+def SearchX():
+    if x3 < 150:
+        xplus()
+        SearchX()
+    elif x3 > 150:
+        xminus()
+        SearchX()
+def SearchY():
+    if y3 < 350:
+        yplus()
+        SearchY()
+    elif y3 > 350:
+        yminus()
+        SearchY()
+print "step fourteen"        
+Points = 500
+score = 0
+def searcher(seeker):
+    seeker = random.choice(TheMap)
+    SearchX()
+    SearchY()
+    TheMap.remove(seeker)
+    if len(TheMap) == 0:
+        return score
+    else:
+        seeker = random.choice(TheMap)
+        searcher(seeker)
+print "step fifteen"
+seeker=random.choice(TheMap)
+print "step sixteen"
+searcher(seeker)
+print "step seventeen"
+window.mainloop()
