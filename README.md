@@ -5,12 +5,9 @@ Project 2
 CONTENTS OF THIS FILE
 ---------------------
  * Introduction
-      This software that
- * Requirements
- * Recommended modules
- * Installation
-      To Install this piece of software you are going to have to either have 
- * Configuration
+      This software is a 
+ * Installation/Requirements
+      To Install this piece of software you are going to have to have python version 2.7.9. Then all you have to do is simply open it in IDLE or double click it in the file and the program should run. 
  * Troubleshooting/FAQ
       If you are having any of the following problems please follow the correct response underneah that problem to          solve you problem.
       
