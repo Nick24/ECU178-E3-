@@ -5,7 +5,7 @@ Project 2
 CONTENTS OF THIS FILE
 ---------------------
  * Introduction
-      This software is a 
+      This software is a group project for five coventry university students. Our goal was to build a virtual robot that would look for treasure in Python while using object oriented programming techniques.
  * Installation/Requirements
       To Install this piece of software you are going to have to have python version 2.7.9. Then all you have to do is simply open it in IDLE or double click it in the file and the program should run. 
  * Troubleshooting/FAQ
