@@ -1,0 +1,136 @@
+import time
+import random
+
+from Tkinter import*
+
+class Landmark:
+    def __init__(self, x, y, size, width):
+        self.x=x
+        self.y=y
+        self.xEnd=x+size
+        self.yEnd=y+size
+        self.size=size
+        self.width=width
+    def createLandmark(self, canvas):
+        self.canvas = canvas
+        self.lm = canvas.create_oval(self.x, self.y, self.x + self.size, self.y + self.size, fill="blue", width=self.width)
+        
+class Maze:
+    def __init__(self, x, y, size, width):
+        self.x=x
+        self.y=y
+        self.xEnd=x+size
+        self.yEnd=y+size
+        self.size=size
+        self.width=width
+    def createMaze(self, canvas):
+        self.canvas = canvas
+        self.lm = canvas.create_rectangle(self.x, self.y, self.x + self.size, self.y + self.size, fill="red", width=self.width)
+    
+    #def __init__ (self, x, y, z, xEnd, yEnd, zEnd, width, fill="red"):
+      #  self.x=x
+       # self.y=y
+        #self.z=z
+        #self.xEnd=xEnd
+       # self.yEnd=yEnd
+       # self.zEnd=yEnd
+       # self.width=width
+   # def createMaze(self, canvas):
+    #    self.canvas = canvas
+     #   self.mz1=canvas.create_polygon(self.x, self.xEnd, self.y, self.yEnd, self.z, self.zEnd, width=self.width)
+        
+window=Tk()
+canvas=Canvas(window, width=800, height=600, bg='white')
+canvas.pack(expand = YES, fill = BOTH)  # The maze image
+maze = PhotoImage(file = 'map.gif')
+canvas.create_image(0, 0, image = maze, anchor = NW)
+canvas.pack(padx=10, pady=10)
+canvas.pack(padx=5,pady=5)
+lm1=Landmark(40, 40, 50, 3)
+lm1.createLandmark(canvas)
+lm2=Landmark(730, 40, 50, 3)
+lm2.createLandmark(canvas)
+lm3=Landmark(40, 530, 50, 3)
+lm3.createLandmark(canvas)
+lm4=Landmark(730, 530, 50, 3)
+lm4.createLandmark(canvas)
+
+
+
+
+vx=1.4
+vy=0.9
+
+x_min=0.0
+y_min=0.0
+x_max=800.0
+y_max=600.0
+
+bot=canvas.create_oval(380, 300, 380+20, 300+20, fill="white", width=2)
+
+def upleft():
+   x1,y1,x2,y2=canvas.coords(bot)
+   canvas.coords(bot,x1-vx,y1-vy,x2-vx,y2-vy)
+   canvas.update()
+   time.sleep(0.01)
+def downright():
+   x1,y1,x2,y2=canvas.coords(bot)
+   canvas.coords(bot,x1+vx,y1+vy,x2+vx,y2+vy)
+   canvas.update()
+   time.sleep(0.01)
+def downleft():
+    x1,y1,x2,y2=canvas.coords(bot)
+    canvas.coords(bot,x1-vx,y1+vy,x2-vx,y2+vy)
+    canvas.update()
+    time.sleep(0.01)
+def upright():
+    x1,y1,x2,y2=canvas.coords(bot)
+    canvas.coords(bot,x1+vx,y1-vy,x2+vx,y2-vy)
+    canvas.update()
+    time.sleep(0.01)
+
+def lighting():
+    decision=random.randint(1,2)
+    def start():
+        light=canvas.create_oval(380, 40, 410, 70, width=2, fill="green")
+        canvas.update()
+    def stop():
+        light=canvas.create_oval(380, 40, 410, 70, width=2, fill="red")
+        canvas.update()
+        
+    if decision == 2:
+        stop()
+        stoptime=time.sleep(random.randint(1,2))
+        start()
+    window.after(1000,lighting)
+window.after(1000,lighting)
+canvas.update()
+
+x1,y1,x2,y2=canvas.coords(bot)
+
+
+
+alist=[1,2,3,4]
+path = random.randint(1,5)
+
+for t in range(1,250):
+   x1,y1,x2,y2=canvas.coords(bot)
+   if path == 1:
+      upleft()
+      tre=canvas.create_oval(42,42, 42+20, 42+20, fill="yellow", outline="yellow")
+      alist.append(5)
+   elif path == 2:
+       upright()
+       tre=canvas.create_oval(725,42, 725+20, 42+20, fill="yellow", outline="yellow")
+       alist.append(6)
+   elif path == 3:
+       downleft()
+       tre=canvas.create_oval(42, 525, 42+20, 525+20, fill="yellow", outline="yellow")
+       alist.append(7)
+   else:
+       downright()
+       tre=canvas.create_oval(725,525, 725+20, 525+20, fill="yellow", outline="yellow")
+       alist.append(8)
+
+canvas.update()
+window.mainloop()
