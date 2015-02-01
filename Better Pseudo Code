@@ -1,0 +1,29 @@
+Import libraries
+create class of landmarks
+	define parameters
+create canvas window and set boundaries
+
+Deploy landmark objects from class above
+
+set canvas border limits
+set movement velocities for both robots
+
+
+define movement keys for controlled robot
+create controlled robot
+	set controlled robot coords as x1,y1,x2,y2
+bind controls to keypad
+
+create robot
+define movement paths for robot
+
+create lighting system
+	implement random light choice
+	implement random stop time
+	light choice every second
+set coords to robot
+
+set random path choice
+	implement path choosing methods
+pack canvas
+set into mainloop
