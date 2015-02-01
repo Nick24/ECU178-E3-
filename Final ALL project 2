@@ -1,0 +1,149 @@
+import time
+import random
+
+from Tkinter import*
+
+
+#creating classes of lanmarks
+class LandImage:
+    def __init__(self, x, y, image, anchor=NW):
+        self.x=x
+        self.y=y
+        self.image=image
+    def createImage(self, canvas):
+        self.canvas = canvas
+        self.image=PhotoImage(file=self.image)
+        self.gif=canvas.create_image(self.x, self.y, image=self.image)
+#setting tkinter window        
+window=Tk()
+canvas=Canvas(window, width=800, height=600, bg='white')
+canvas.pack(padx=5,pady=5)
+
+
+#implementing landmarks
+gifm=LandImage(400,300, 'map.gif')
+gifm.createImage(canvas)
+gif1=LandImage(65,58, 'temple.gif')
+gif1.createImage(canvas)
+gif2=LandImage(730,65, 'cave.gif')
+gif2.createImage(canvas)
+gif3=LandImage(65,530, 'hut.gif')
+gif3.createImage(canvas)
+gif4=LandImage(730,530, 'cave.gif')
+gif4.createImage(canvas)
+
+x_min=0
+y_min=0
+x_max=800.0
+y_max=600.0
+#setting movement velocities
+vx=0.7
+vy=0.45
+
+vt=5
+vz=5
+#defining movement keys for conrolled robot
+def leftKey(event):
+    print "Left key pressed"
+    x1,y1,x2,y2=canvas.coords(id1)
+    if x1 > x_min+5:
+        canvas.coords(id1,x1-vt,y1,x2-vt,y2)
+def rightKey(event):
+    print "Right key pressed"
+    x1,y1,x2,y2=canvas.coords(id1)
+    if x2 < x_max-5:
+        canvas.coords(id1,x1+vt,y1,x2+vt,y2)
+def upKey(event):
+    print "Up key pressed"
+    x1,y1,x2,y2=canvas.coords(id1)
+    if y1 > y_min+5:
+        canvas.coords(id1,x1,y1-vz,x2,y2-vz)
+def downKey(event):
+    print "Down key pressed"
+    x1,y1,x2,y2=canvas.coords(id1)
+    if y2 < y_max-5:
+        canvas.coords(id1,x1,y1+vz,x2,y2+vz)
+#creating controlled robot
+id1=canvas.create_rectangle(400, 310, 400+10, 310+10, fill='red')
+x1,y1,x2,y2=canvas.coords(id1)
+canvas.coords(id1,x1,y1,x2,y2)
+canvas.update()
+
+#Binding keyboard keys to the given functions
+canvas.bind('<Left>', leftKey)
+canvas.bind('<Right>', rightKey)
+canvas.bind('<Up>', upKey)
+canvas.bind('<Down>', downKey)
+print "step seven"
+canvas.focus_set()
+
+#creating robot
+bot=canvas.create_oval(380, 300, 380+20, 300+20, fill="white", width=2)
+
+#defining movement paths for robot
+def upleft():
+   x1,y1,x2,y2=canvas.coords(bot)
+   canvas.coords(bot,x1-vx,y1-vy,x2-vx,y2-vy)
+   canvas.update()
+   time.sleep(0.001)
+def downright():
+   x1,y1,x2,y2=canvas.coords(bot)
+   canvas.coords(bot,x1+vx,y1+vy,x2+vx,y2+vy)
+   canvas.update()
+   time.sleep(0.001)
+def downleft():
+    x1,y1,x2,y2=canvas.coords(bot)
+    canvas.coords(bot,x1-vx,y1+vy,x2-vx,y2+vy)
+    canvas.update()
+    time.sleep(0.001)
+def upright():
+    x1,y1,x2,y2=canvas.coords(bot)
+    canvas.coords(bot,x1+vx,y1-vy,x2+vx,y2-vy)
+    canvas.update()
+    time.sleep(0.001)
+
+#creating lighting function
+def lighting():
+    decision=random.randint(1,2)
+    def start():
+        light=canvas.create_oval(380, 40, 410, 70, width=2, fill="green")
+        canvas.update()
+    def stop():
+        light=canvas.create_oval(380, 40, 410, 70, width=2, fill="red")
+        canvas.update()
+        
+    if decision == 2:
+        stop()
+        stoptime=time.sleep(random.randint(1,4))
+        start()
+    window.after(1000,lighting)
+window.after(1000,lighting)
+canvas.update()
+
+x1,y1,x2,y2=canvas.coords(bot)
+
+
+#setting random pathchoice range
+path = random.randint(1,5)
+
+for t in range(1,500):
+   x1,y1,x2,y2=canvas.coords(bot)
+   if path == 1:
+      tre=canvas.create_oval(42,42, 42+20, 42+20, fill="yellow", outline="yellow")
+      upleft()
+      print 'treasure at top left'
+   elif path == 2:
+       tre=canvas.create_oval(725,42, 725+20, 42+20, fill="yellow", outline="yellow")
+       upright()
+       print 'treasure at top right'
+   elif path == 3:
+       tre=canvas.create_oval(42, 525, 42+20, 525+20, fill="yellow", outline="yellow")
+       downleft()
+       print 'treasure at bottom left'
+   else:
+       tre=canvas.create_oval(725,525, 725+20, 525+20, fill="yellow", outline="yellow")
+       downright()
+       print 'treature at bottom right'
+#final packing
+canvas.update()
+window.mainloop()
